@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
@@ -13,9 +13,7 @@ import {
   Clock, 
   BookOpen, 
   GraduationCap,
-  Eye 
 } from 'lucide-react';
-import FinanceArticleCard from '../components/FinanceArticleCard';
 
 // Import the articles from data/articles.tsx
 import { articles as academicArticles } from '../data/articles.tsx';
@@ -132,10 +130,7 @@ interface Article {
   content: string;
 }
 
-interface CursorPosition {
-  x: number;
-  y: number;
-}
+
 
 const BlogPage: React.FC = () => {
   // State variables
@@ -143,33 +138,10 @@ const BlogPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [animateHeader, setAnimateHeader] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState<CursorPosition>({ x: 0, y: 0 });
-  const [cursorHovered, setCursorHovered] = useState(false);
-  
-  // Refs
+
   const containerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  // Effect for tracking cursor position
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Scroll effect for header
-  useEffect(() => {
-    const handleScroll = () => {
-      setAnimateHeader(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Removed unused cursorPosition state and its associated logic
 
   // Get all unique categories from articles
   const categories = Array.from(new Set([
