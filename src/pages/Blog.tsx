@@ -272,7 +272,7 @@ const BlogPage: React.FC = () => {
           >
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-academic-100 shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" 
+                src="https://media.licdn.com/dms/image/v2/C4D03AQEbdlj0G6KkOg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1660914444908?e=1753315200&v=beta&t=FJQS2JZwJGKJt4pT4Y-jdWN5rmFIXzCR7dzKgZoBS-Q" 
                 alt="Prof. Walter Eclache" 
                 className="w-full h-full object-cover" 
               />
