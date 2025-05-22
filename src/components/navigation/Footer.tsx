@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Facebook,  Instagram, Youtube, Mail, Phone,  ArrowRight, ChevronRight } from 'lucide-react';
-import logo from '../../images/p.png';
 export const Footer = () => {
   return (
     <footer className="bg-[#0A090C] border-t border-white/5 pt-16 pb-8">
@@ -54,7 +53,7 @@ export const Footer = () => {
           {/* Column 1: About */}
           <div>
             <div className="mb-5 flex items-center gap-4 w-max"> 
-            <img src={logo} alt="RB Cursos" className="h-20" />            </div>
+                      </div>
             
             <p className="text-white/70 text-sm mb-6">
               Excelência em aprovações para concursos através de metodologia exclusiva e materiais de estudo de alta qualidade.

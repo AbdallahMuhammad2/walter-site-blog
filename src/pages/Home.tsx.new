@@ -1,0 +1,621 @@
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  motion, useScroll, useTransform, useInView
+} from 'framer-motion';
+import { Link } from 'react-router-dom';
+import {
+  CheckCircle, ArrowRight, ChevronRight, ChevronLeft, Clock, 
+  Play, Sparkles, GraduationCap, Target, Zap, Brain,
+  BookText, ArrowDown, BookMarked, Glasses,
+  Mail, User, FileText, X, Menu, Eye, Heart, Trophy,
+  ShoppingCart, Youtube, DollarSign, LineChart, PieChart, 
+  Briefcase, CreditCard, Wallet, TrendingDown, CircleDollarSign
+} from 'lucide-react';
+
+import case1 from '../images/case1.jpg';
+import case2 from '../images/case2.jpg';
+import case3 from '../images/case3.jpg';
+import case4 from '../images/case4.jpg';
+import case5 from '../images/case5.jpg';
+import case6 from '../images/case6.jpg';
+import image from '../images/image.png';
+import yan from '../images/yan3.jpg';
+
+// ProfFinanceNavigation component with clean, modern design
+const ProfFinanceNavigation = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeMobileMenu, setActiveMobileMenu] = useState(false);
+
+  // Handle scroll effect for navbar background
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    {
+      title: "Finanças Pessoais",
+      href: "#financas",
+      icon: <Wallet className="w-4 h-4" />
+    },
+    {
+      title: "Investimentos",
+      href: "#investimentos",
+      icon: <LineChart className="w-4 h-4" />
+    },
+    {
+      title: "Sobre o Professor",
+      href: "#professor",
+      icon: <GraduationCap className="w-4 h-4" />
+    },
+    {
+      title: "Artigos",
+      href: "#artigos",
+      icon: <FileText className="w-4 h-4" />
+    },
+    {
+      title: "Cursos",
+      href: "#cursos",
+      icon: <BookMarked className="w-4 h-4" />
+    },
+    {
+      title: "Consultoria",
+      href: "#consultoria",
+      icon: <Briefcase className="w-4 h-4" />
+    }
+  ];
+  
+  return (
+    <>
+      <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo and Professor Branding */}
+            <div className="flex items-center">
+              <motion.div
+                className="flex items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Link to="/" className="flex items-center">
+                  <div className="relative h-10 w-10 mr-3">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-finance-500 to-accent-400"></div>
+                    <div className="absolute inset-[2px] rounded-full bg-white flex items-center justify-center text-finance-600 font-bold text-lg">
+                      FP
+                    </div>
+                  </div>
+                  <span className="font-semibold text-lg hidden sm:block">
+                    <span className={`${isScrolled ? 'text-finance-800' : 'text-white'}`}>Prof</span>
+                    <span className={`${isScrolled ? 'text-finance-500' : 'text-accent-400'}`}>Finance</span>
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {navItems.map((item, index) => (
+                <motion.a
+                  key={index}
+                  href={item.href}
+                  className={`px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-all ${
+                    isScrolled ? 'text-neutral-700 hover:bg-finance-50 hover:text-finance-600' : 'text-white hover:bg-white/10'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {item.icon}
+                  {item.title}
+                </motion.a>
+              ))}
+            </nav>
+
+            {/* CTA Button - Desktop */}
+            <div className="hidden md:block">
+              <motion.a
+                href="#contato"
+                className="bg-gradient-to-r from-finance-600 to-finance-500 text-white px-6 py-2.5 rounded-lg font-medium text-sm shadow-lg flex items-center gap-2"
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 116, 225, 0.4)" }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Mail className="w-4 h-4" />
+                Contato
+              </motion.a>
+            </div>
+            
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <motion.button
+                onClick={() => setActiveMobileMenu(!activeMobileMenu)}
+                className={`p-2 rounded-lg ${
+                  isScrolled ? 'bg-finance-50 text-finance-600' : 'bg-white/10 text-white'
+                }`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {activeMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {activeMobileMenu && (
+          <motion.div
+            className="fixed inset-0 bg-white z-40 pt-20"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <div className="container mx-auto px-4 py-6">
+              <nav className="flex flex-col space-y-2">
+                {navItems.map((item, index) => (
+                  <motion.a
+                    key={index}
+                    href={item.href}
+                    className="p-4 rounded-lg text-neutral-700 hover:bg-finance-50 hover:text-finance-600 flex items-center gap-3 font-medium"
+                    onClick={() => setActiveMobileMenu(false)}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-finance-100 flex items-center justify-center text-finance-600">
+                      {item.icon}
+                    </div>
+                    {item.title}
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="mt-8 border-t border-neutral-100 pt-6">
+                <a
+                  href="#contato"
+                  className="block w-full py-4 rounded-lg bg-gradient-to-r from-finance-600 to-finance-500 text-white text-center font-medium"
+                  onClick={() => setActiveMobileMenu(false)}
+                >
+                  Entre em contato
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+// Ultra-premium Counter with better animations
+const LocalCounter = ({ from, to, duration = 2, delay = 0 }: {
+  from: number; to: number; duration?: number; delay?: number
+}) => {
+  const [count, setCount] = useState(from);
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true, margin: "-5%" });
+  const hasAnimated = useRef(false);
+  
+  useEffect(() => {
+    // Ensure final value is shown if component unmounts
+    return () => {
+      if (!hasAnimated.current) {
+        setCount(to);
+      }
+    };
+  }, [to]);
+  
+  useEffect(() => {
+    if (!isInView || hasAnimated.current) return;
+    
+    // Set a fallback timeout to ensure number always appears
+    const fallback = setTimeout(() => {
+      if (count === from) {
+        setCount(to);
+      }
+    }, 3000); // Fallback after 3 seconds
+    
+    // Start animation with a small delay to ensure mobile has time to initialize
+    const timer = setTimeout(() => {
+      hasAnimated.current = true;
+      
+      let startTime: number | null = null;
+      let animationFrame: number;
+      
+      const step = (timestamp: number) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+        
+        // Use easing function for smoother counting
+        const easeOutQuad = (x: number) => 1 - (1 - x) * (1 - x);
+        const easedProgress = easeOutQuad(progress);
+        
+        const currentValue = Math.floor(from + (to - from) * easedProgress);
+        setCount(currentValue);
+        
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(step);
+        } else {
+          setCount(to); // Ensure final value is exact
+        }
+      };
+      
+      animationFrame = requestAnimationFrame(step);
+      
+      return () => {
+        cancelAnimationFrame(animationFrame);
+        clearTimeout(fallback);
+      };
+    }, delay * 1000);
+    
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fallback);
+    };
+  }, [isInView, from, to, duration, delay, count]);
+  
+  // For server-side rendering safety
+  useEffect(() => {
+    // Set value immediately on mobile devices
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      // Add slight delay to ensure React has time to render
+      const mobileTimer = setTimeout(() => {
+        setCount(to);
+      }, 500);
+      return () => clearTimeout(mobileTimer);
+    }
+  }, [to]);
+  
+  return <span ref={nodeRef}>{count}</span>;
+};
+
+// Background Canvas Element for organic animation
+const BackgroundCanvas = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 2;
+
+    const particles: {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      opacity: number;
+    }[] = [];
+
+    // Create particles
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 5 + 1,
+        speedX: Math.random() * 0.5 - 0.25,
+        speedY: Math.random() * 0.2 - 0.1,
+        color: i % 3 === 0 ? '#0074E1' : i % 3 === 1 ? '#20B394' : '#40D5B9', 
+        opacity: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = `${particle.color}${Math.round(particle.opacity * 255).toString(16).padStart(2, '0')}`;
+        ctx.fill();
+
+        // Update position
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        // Boundary checks
+        if (particle.x < 0 || particle.x > canvas.width) {
+          particle.speedX = -particle.speedX;
+        }
+
+        if (particle.y < 0 || particle.y > canvas.height) {
+          particle.speedY = -particle.speedY;
+        }
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // Handle resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight * 2;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-30"
+    />
+  );
+};
+
+// Main Page Component with premium design
+const ProfFinance = () => {
+  const [activeTab, setActiveTab] = useState("metodologia");
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeBioSection, setActiveBioSection] = useState("education");
+  
+  // Scroll animations
+  const { scrollY } = useScroll();
+  const heroRef = useRef<HTMLElement>(null);
+  const heroImageY = useTransform(scrollY, [0, 800], [0, 200]);
+  const heroContentY = useTransform(scrollY, [0, 800], [0, 100]);
+
+  return (
+    <div className="relative overflow-hidden bg-[#080608] text-white">
+      {/* Add the navigation component */}
+      <ProfFinanceNavigation />
+      
+      {/* Hero Section - First view with premium design */}
+      <section id="professor" ref={heroRef} className="relative min-h-[100vh] py-28 lg:py-0 flex items-center overflow-hidden bg-gradient-to-b from-finance-900 to-finance-800">
+        {/* Background canvas element for animated particles */}
+        <BackgroundCanvas />
+        
+        {/* Content container */}
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Hero content grid */}
+          <div className="grid lg:grid-cols-12 gap-12 items-center min-h-[80vh]">
+            {/* Text content */}
+            <motion.div className="lg:col-span-7">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                <motion.div
+                  className="flex items-center gap-2 bg-white/10 backdrop-blur-md py-2 px-3 rounded-full mb-7 w-fit"
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  <CircleDollarSign className="w-3.5 h-3.5 text-white" />
+                  <span className="text-sm font-medium bg-gradient-to-r from-finance-500 via-accent-400 to-finance-500 bg-clip-text text-transparent">
+                    Especialista em Finanças e Investimentos
+                  </span>
+                </motion.div>
+
+                <div className="mb-6">
+                  <motion.h1
+                    className="text-5xl lg:text-7xl font-extrabold mb-4"
+                    initial={{ opacity: 0, rotateX: -20 }}
+                    animate={{ opacity: 1, rotateX: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  >
+                    Prof. <span className="relative inline-block">
+                      <span className="absolute inset-0 blur-[20px] bg-gradient-to-r from-finance-500 via-accent-400 to-finance-500 opacity-30" />
+                      <span className="relative bg-gradient-to-r from-finance-500 via-accent-400 to-finance-500 bg-clip-text text-transparent">
+                        Finance
+                      </span>
+                    </span>
+                  </motion.h1>
+                  
+                  <motion.h2
+                    className="text-3xl lg:text-4xl font-bold text-white/80 mb-6"
+                    initial={{ opacity: 0, rotateX: -20 }}
+                    animate={{ opacity: 1, rotateX: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                  >
+                    Economista, Analista de Mercado e Consultor Financeiro
+                  </motion.h2>
+                </div>
+
+                {/* Modern animated divider */}
+                <motion.div
+                  className="relative h-[2px] w-32 my-8 overflow-hidden"
+                  initial={{ width: 0 }}
+                  animate={{ width: 128 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  <motion.div
+                    className="absolute inset-0"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, #0074E1, #40D5B9, #0074E1, transparent)",
+                      backgroundSize: "200% 100%"
+                    }}
+                    animate={{ backgroundPosition: ["0% center", "200% center"] }}
+                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
+                  />
+                </motion.div>
+
+                <motion.p
+                  className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                >
+                  Estratégias personalizadas que <span className="text-accent-400 font-medium">já ajudaram mais de 3.000 pessoas</span> a alcançar independência financeira e construir patrimônio. Transformando conceitos complexos do mercado em estratégias claras e eficientes.
+                </motion.p>
+              </motion.div>
+
+              {/* Premium Call-to-Actions */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-6 mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                <motion.button
+                  className="group relative px-8 py-5 rounded-lg overflow-hidden"
+                  whileHover={{ scale: 1.03, boxShadow: "0 10px 30px -5px rgba(0, 116, 225, 0.5)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-finance-600 via-finance-500 to-finance-600 bg-[length:200%_auto]" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[url('/noise-pattern.svg')] bg-repeat mix-blend-overlay" />
+
+                  <div className="relative flex items-center gap-3">
+                    <span className="text-white font-medium">Consultoria Financeira</span>
+                    <motion.span
+                      className="flex items-center"
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+                    >
+                      <ArrowRight className="h-5 w-5 text-white" />
+                    </motion.span>
+                  </div>
+
+                  <div className="absolute -inset-full h-full w-1/3 z-5 block transform -skew-x-12 bg-white opacity-30 group-hover:animate-shine" />
+                </motion.button>
+
+                <motion.button
+                  className="relative px-8 py-5 rounded-lg border border-accent-400/30 group overflow-hidden"
+                  whileHover={{
+                    scale: 1.03,
+                    backgroundColor: "rgba(32, 179, 148, 0.1)",
+                    borderColor: "rgba(32, 179, 148, 0.6)"
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <motion.span
+                    className="absolute inset-0 bg-accent-400/5 rounded-lg"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+
+                  <div className="relative flex items-center gap-2">
+                    <span className="text-accent-400 font-medium">Estratégias de Investimento</span>
+                    <motion.div
+                      animate={{ x: [0, 3, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+                    >
+                      <ChevronRight className="h-5 w-5 text-accent-400" />
+                    </motion.div>
+                  </div>
+                </motion.button>
+              </motion.div>
+
+              {/* Enhanced Stats */}
+              <motion.div className="grid grid-cols-2 gap-x-12 gap-y-8">
+                {[
+                  { value: 3000, suffix: "+", label: "Clientes satisfeitos", delay: 0 },
+                  { value: 92, suffix: "%", label: "Taxa de rentabilidade", delay: 0.1 },
+                  { value: 15, suffix: "+", label: "Anos no mercado", delay: 0.2 },
+                  { value: 5, suffix: "M", label: "Em ativos gerenciados", delay: 0.3 }
+                ].map((stat, i) => (
+                  <motion.div
+                    key={i}
+                    className="relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.2 + stat.delay }}
+                  >
+                    <motion.div
+                      className="absolute -inset-4 rounded-lg bg-finance-500/5 blur-lg z-0"
+                      animate={{
+                        opacity: [0.3, 0.5, 0.3],
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
+                    />
+
+                    <div className="relative z-10">
+                      <div className="flex items-baseline">
+                        <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-finance-500 via-accent-400 to-finance-500 bg-clip-text text-transparent">
+                          <LocalCounter from={0} to={stat.value} duration={2} delay={0.5} />
+                        </div>
+                        <span className="text-2xl lg:text-3xl font-bold text-accent-400 ml-1">{stat.suffix}</span>
+                      </div>
+                      <span className="text-white/70">{stat.label}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Professor Image with premium effects */}
+            <motion.div className="lg:col-span-5 relative z-10">
+              <div className="relative">
+                {/* Luxury image container */}
+                <motion.div
+                  className="relative mx-auto lg:ml-auto lg:mr-0 w-[280px] h-[280px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]"
+                  initial={{ opacity: 0, scale: 0.9, rotateZ: -5 }}
+                  animate={{ opacity: 1, scale: 1, rotateZ: 0 }}
+                  transition={{ duration: 1.2, delay: 0.5, type: "spring", stiffness: 100 }}
+                >
+                  {/* Background glow */}
+                  <motion.div
+                    className="absolute -inset-4 rounded-full bg-gradient-to-br from-finance-600/30 via-accent-400/20 to-finance-500/30 blur-xl"
+                    animate={{
+                      scale: [1, 1.05, 1],
+                      opacity: [0.4, 0.6, 0.4]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                  />
+
+                  {/* Premium border with animated scanner effect */}
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <div className="absolute inset-0 rounded-full border-[1px] border-finance-500/40" />
+
+                    <motion.div
+                      className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-accent-400/40 to-transparent blur-sm"
+                      animate={{
+                        left: ["-50%", "150%"],
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, repeatDelay: 3 }}
+                    />
+
+                    {/* Secondary animated ring */}
+                    <motion.div
+                      className="absolute inset-0 rounded-full border-2 border-finance-600/0"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        borderColor: ["rgba(0,116,225,0)", "rgba(32,179,148,0.3)", "rgba(0,116,225,0)"],
+                        opacity: [0.5, 1, 0.5]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                    />
+                  </div>
+
+                  {/* Main image */}
+                  <div className="absolute inset-[6px] rounded-full overflow-hidden border-[8px] border-[#13121A]">
+                    <img
+                      src={yan}
+                      alt="Professor Finance - Especialista em Finanças"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080608]/80 via-[#080608]/20 to-transparent mix-blend-multiply"></div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional sections would go here */}
+
+    </div>
+  );
+};
+
+export default ProfFinance;

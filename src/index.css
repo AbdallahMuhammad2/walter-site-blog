@@ -4,20 +4,20 @@
 
 @layer base {
   body {
-    @apply bg-luxury-900 text-white;
+    @apply bg-white text-neutral-800;
   }
 }
 
-.gold-gradient {
-  background: linear-gradient(45deg, #FFC000, #FFD966, #FFC000);
+.finance-gradient {
+  background: linear-gradient(45deg, #0074E1, #40D5B9, #0074E1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradient 8s ease infinite;
 }
 
-.gold-border {
-  background: linear-gradient(45deg, #FFC000, #FFD966, #FFC000);
+.finance-border {
+  background: linear-gradient(45deg, #0074E1, #40D5B9, #0074E1);
   background-size: 200% 200%;
   animation: gradient 8s ease infinite;
 }
@@ -30,20 +30,20 @@
 
 .glass-effect {
   backdrop-filter: blur(10px);
-  background: rgba(10, 10, 10, 0.8);
-  border: 1px solid rgba(255, 192, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 116, 225, 0.1);
 }
 
 .text-stroke {
-  -webkit-text-stroke: 1px #FFC000;
+  -webkit-text-stroke: 1px #0074E1;
 }
 
-.hover-gold {
+.hover-finance {
   position: relative;
   overflow: hidden;
 }
 
-.hover-gold::after {
+.hover-finance::after {
   content: '';
   position: absolute;
   left: -100%;
@@ -53,30 +53,30 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 192, 0, 0.2),
+    rgba(0, 116, 225, 0.2),
     transparent
   );
   transition: 0.5s;
 }
 
-.hover-gold:hover::after {
+.hover-finance:hover::after {
   left: 100%;
 }
 
 .article-content h2 {
-  @apply text-2xl font-bold text-white mt-10 mb-4;
+  @apply text-2xl font-bold text-neutral-800 mt-10 mb-4;
 }
 
 .article-content h3 {
-  @apply text-xl font-bold text-white mt-8 mb-3;
+  @apply text-xl font-bold text-neutral-800 mt-8 mb-3;
 }
 
 .article-content p {
-  @apply text-white/80 mb-4 leading-relaxed;
+  @apply text-neutral-700 mb-4 leading-relaxed;
 }
 
 .article-content ul, .article-content ol {
-  @apply text-white/80 mb-6 pl-6;
+  @apply text-neutral-700 mb-6 pl-6;
 }
 
 .article-content ul {
@@ -92,9 +92,9 @@
 }
 
 .article-highlight {
-  @apply bg-[#13121A] border-l-4 border-[#D4AF37] p-4 rounded-r-lg mb-6;
+  @apply bg-finance-50 border-l-4 border-finance-500 p-4 rounded-r-lg mb-6;
 }
 
 .article-formula {
-  @apply bg-[#181820] p-4 rounded-lg my-4 font-mono text-white/90;
+  @apply bg-neutral-50 p-4 rounded-lg my-4 font-mono text-neutral-800 border border-neutral-200;
 }
